@@ -215,7 +215,7 @@
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            background: linear-gradient(135deg, #36454F 0%, #2F4F4F 100%);
             border-radius: 2px;
         }
 
@@ -412,14 +412,14 @@
         }
 
         .read-more {
-            color: #00b4db;
+            color: #36454F;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s ease;
         }
 
         .read-more:hover {
-            color: #0083b0;
+            color: #2F4F4F;
         }
 
         /* Contact Section */
@@ -459,6 +459,7 @@
             transform: translateX(-50%);
             color: white;
             animation: bounce 2s infinite;
+            z-index: 1001;
         }
 
         @keyframes bounce {
@@ -512,7 +513,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <img src="AS.jpg" alt="Avinash's Photo" class="main-photo">
+            <img src="AS_coffee.jpg" alt="Avinash's Photo" class="main-photo">
             <div class="welcome-text">
                 <h1>BIOLOGIST, RESEARCHER, WRITER,<br>PHOTOGRAPHER, HODOPHILE</h1>
                 <p>Hola Amigos!</p>
@@ -672,6 +673,8 @@
         // Auto-rotate gallery photos every 1 second
         function rotateGallery() {
             const galleryGrid = document.getElementById('gallery-grid');
+            if (!galleryGrid) return; // Prevent error if element not found
+            
             galleryGrid.innerHTML = '';
             
             for (let i = 0; i < 3; i++) {
@@ -685,7 +688,9 @@
                 
                 // Add animation delay
                 setTimeout(() => {
-                    galleryItem.classList.add('visible');
+                    if (galleryItem) {
+                        galleryItem.classList.add('visible');
+                    }
                 }, i * 100);
             }
             
@@ -698,35 +703,45 @@
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             
-            lightboxImg.src = galleryPhotos[index];
-            lightbox.classList.add('active');
-            
-            // Prevent body scroll
-            document.body.style.overflow = 'hidden';
+            if (lightbox && lightboxImg) {
+                lightboxImg.src = galleryPhotos[index];
+                lightbox.classList.add('active');
+                
+                // Prevent body scroll
+                document.body.style.overflow = 'hidden';
+            }
         }
 
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
-            lightbox.classList.remove('active');
-            
-            // Restore body scroll
-            document.body.style.overflow = 'auto';
+            if (lightbox) {
+                lightbox.classList.remove('active');
+                
+                // Restore body scroll
+                document.body.style.overflow = 'auto';
+            }
         }
 
         function nextImage() {
             currentLightboxIndex = (currentLightboxIndex + 1) % galleryPhotos.length;
-            document.getElementById('lightbox-img').src = galleryPhotos[currentLightboxIndex];
+            const lightboxImg = document.getElementById('lightbox-img');
+            if (lightboxImg) {
+                lightboxImg.src = galleryPhotos[currentLightboxIndex];
+            }
         }
 
         function prevImage() {
             currentLightboxIndex = (currentLightboxIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
-            document.getElementById('lightbox-img').src = galleryPhotos[currentLightboxIndex];
+            const lightboxImg = document.getElementById('lightbox-img');
+            if (lightboxImg) {
+                lightboxImg.src = galleryPhotos[currentLightboxIndex];
+            }
         }
 
         // Keyboard navigation for lightbox
         document.addEventListener('keydown', function(e) {
             const lightbox = document.getElementById('lightbox');
-            if (lightbox.classList.contains('active')) {
+            if (lightbox && lightbox.classList.contains('active')) {
                 if (e.key === 'ArrowRight') {
                     nextImage();
                 } else if (e.key === 'ArrowLeft') {
@@ -737,9 +752,88 @@
             }
         });
 
-        // Start gallery rotation
-        rotateGallery(); // Initial load
-        setInterval(rotateGallery, 1000); // Rotate every 1 second
+        // Dynamic article loading simulation
+        const articles = [
+            {
+                title: "The Poetry of Quantum Physics",
+                excerpt: "Exploring how the mysterious world of quantum mechanics mirrors the abstract beauty found in modern poetry...",
+                link: "#"
+            },
+            {
+                title: "Consciousness and Creativity", 
+                excerpt: "Investigating the relationship between altered states of consciousness and creative breakthrough moments...",
+                link: "#"
+            },
+            {
+                title: "Literature in the Digital Age",
+                excerpt: "How technology is reshaping the way we create, consume, and understand literary works in the 21st century...",
+                link: "#"
+            },
+            {
+                title: "The Science of Storytelling",
+                excerpt: "Understanding how our brains are wired to create and consume narratives, and what this means for writers...",
+                link: "#"
+            },
+            {
+                title: "Meditation and Mental Clarity",
+                excerpt: "Examining the neuroscience behind mindfulness practices and their impact on cognitive function...",
+                link: "#"
+            }
+        ];
+
+        // Rotate articles every 10 seconds
+        let currentArticleSet = 0;
+        function rotateArticles() {
+            const articlesGrid = document.getElementById('articles-grid');
+            if (!articlesGrid) return; // Prevent error if element not found
+            
+            const startIndex = currentArticleSet * 3;
+            const endIndex = Math.min(startIndex + 3, articles.length);
+            
+            articlesGrid.innerHTML = '';
+            
+            for (let i = startIndex; i < endIndex; i++) {
+                const article = articles[i];
+                const articleCard = document.createElement('div');
+                articleCard.className = 'article-card';
+                articleCard.innerHTML = `
+                    <h3>${article.title}</h3>
+                    <p>${article.excerpt}</p>
+                    <a href="${article.link}" class="read-more">Read More →</a>
+                `;
+                articlesGrid.appendChild(articleCard);
+                
+                // Only observe if observer exists
+                if (typeof observer !== 'undefined') {
+                    observer.observe(articleCard);
+                }
+            }
+            
+            currentArticleSet = (currentArticleSet + 1) % Math.ceil(articles.length / 3);
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start gallery rotation immediately
+            setTimeout(() => {
+                rotateGallery(); // Initial load
+                setInterval(rotateGallery, 1000); // Rotate every 1 second
+            }, 500); // Small delay to ensure DOM is ready
+            
+            // Start article rotation
+            setInterval(rotateArticles, 10000);
+        });
+
+        // Also try to start gallery if DOM is already loaded
+        if (document.readyState === 'loading') {
+            // DOM is still loading
+        } else {
+            // DOM is already loaded
+            setTimeout(() => {
+                rotateGallery();
+                setInterval(rotateGallery, 1000);
+            }, 500);
+        }
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
