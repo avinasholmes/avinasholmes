@@ -505,7 +505,7 @@
     </nav>
 
     <div class="nav-menu" id="nav-menu">
-        <a href="#science" class="nav-item">Science and Literature</a>
+        <a href="https://avinasholmes.blogspot.com" target="_blank" class="nav-item">Science and Literature</a>
         <a href="#thirdeye" class="nav-item">Third Eye</a>
         <a href="#store" class="nav-item">Holmes Store</a>
     </div>
@@ -673,28 +673,25 @@
         // Auto-rotate gallery photos every 1 second
         function rotateGallery() {
             const galleryGrid = document.getElementById('gallery-grid');
-            if (!galleryGrid) return; // Prevent error if element not found
+            if (!galleryGrid) {
+                console.log('Gallery grid not found yet, retrying...');
+                return; // Prevent error if element not found
+            }
             
             galleryGrid.innerHTML = '';
             
             for (let i = 0; i < 3; i++) {
                 const photoIndex = (currentGallerySet + i) % galleryPhotos.length;
                 const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
+                galleryItem.className = 'gallery-item visible'; // Add visible class immediately
                 galleryItem.innerHTML = `
-                    <img src="${galleryPhotos[photoIndex]}" alt="Gallery Photo ${photoIndex + 1}" onclick="openLightbox(${photoIndex})">
+                    <img src="${galleryPhotos[photoIndex]}" alt="Gallery Photo ${photoIndex + 1}" onclick="openLightbox(${photoIndex})" onerror="console.log('Failed to load: ${galleryPhotos[photoIndex]}')">
                 `;
                 galleryGrid.appendChild(galleryItem);
-                
-                // Add animation delay
-                setTimeout(() => {
-                    if (galleryItem) {
-                        galleryItem.classList.add('visible');
-                    }
-                }, i * 100);
             }
             
             currentGallerySet = (currentGallerySet + 1) % galleryPhotos.length;
+            console.log('Gallery rotated to set:', currentGallerySet);
         }
 
         // Lightbox functionality
@@ -752,54 +749,84 @@
             }
         });
 
-        // Dynamic article loading simulation
-        const articles = [
-            {
-                title: "The Poetry of Quantum Physics",
-                excerpt: "Exploring how the mysterious world of quantum mechanics mirrors the abstract beauty found in modern poetry...",
-                link: "#"
-            },
-            {
-                title: "Consciousness and Creativity", 
-                excerpt: "Investigating the relationship between altered states of consciousness and creative breakthrough moments...",
-                link: "#"
-            },
-            {
-                title: "Literature in the Digital Age",
-                excerpt: "How technology is reshaping the way we create, consume, and understand literary works in the 21st century...",
-                link: "#"
-            },
-            {
-                title: "The Science of Storytelling",
-                excerpt: "Understanding how our brains are wired to create and consume narratives, and what this means for writers...",
-                link: "#"
-            },
-            {
-                title: "Meditation and Mental Clarity",
-                excerpt: "Examining the neuroscience behind mindfulness practices and their impact on cognitive function...",
-                link: "#"
+        // Fetch real articles from Blogger
+        async function fetchBloggerArticles() {
+            try {
+                const response = await fetch('https://avinasholmes.blogspot.com/feeds/posts/default?alt=json&max-results=10');
+                const data = await response.json();
+                
+                const articles = data.feed.entry.map(entry => {
+                    // Extract title
+                    const title = entry.title.$t;
+                    
+                    // Extract excerpt from content
+                    let excerpt = '';
+                    if (entry.summary && entry.summary.$t) {
+                        excerpt = entry.summary.$t.replace(/<[^>]*>/g, '').substring(0, 150) + '...';
+                    } else if (entry.content && entry.content.$t) {
+                        excerpt = entry.content.$t.replace(/<[^>]*>/g, '').substring(0, 150) + '...';
+                    }
+                    
+                    // Get the blog post URL
+                    const link = entry.link.find(l => l.rel === 'alternate').href;
+                    
+                    return {
+                        title: title,
+                        excerpt: excerpt,
+                        link: link
+                    };
+                });
+                
+                return articles;
+            } catch (error) {
+                console.error('Error fetching Blogger articles:', error);
+                // Fallback to default articles if fetch fails
+                return [
+                    {
+                        title: "The Poetry of Quantum Physics",
+                        excerpt: "Exploring how the mysterious world of quantum mechanics mirrors the abstract beauty found in modern poetry...",
+                        link: "https://avinasholmes.blogspot.com"
+                    },
+                    {
+                        title: "Consciousness and Creativity", 
+                        excerpt: "Investigating the relationship between altered states of consciousness and creative breakthrough moments...",
+                        link: "https://avinasholmes.blogspot.com"
+                    },
+                    {
+                        title: "Literature in the Digital Age",
+                        excerpt: "How technology is reshaping the way we create, consume, and understand literary works in the 21st century...",
+                        link: "https://avinasholmes.blogspot.com"
+                    }
+                ];
             }
-        ];
+        }
 
-        // Rotate articles every 10 seconds
+        // Update articles rotation to use real Blogger content
         let currentArticleSet = 0;
+        let bloggerArticles = [];
+
+        async function initializeBloggerArticles() {
+            bloggerArticles = await fetchBloggerArticles();
+            rotateArticles(); // Start rotation with real articles
+        }
+
         function rotateArticles() {
             const articlesGrid = document.getElementById('articles-grid');
-            if (!articlesGrid) return; // Prevent error if element not found
+            if (!articlesGrid || bloggerArticles.length === 0) return;
             
             const startIndex = currentArticleSet * 3;
-            const endIndex = Math.min(startIndex + 3, articles.length);
+            const endIndex = Math.min(startIndex + 3, bloggerArticles.length);
             
             articlesGrid.innerHTML = '';
             
             for (let i = startIndex; i < endIndex; i++) {
-                const article = articles[i];
+                const article = bloggerArticles[i];
                 const articleCard = document.createElement('div');
                 articleCard.className = 'article-card';
                 articleCard.innerHTML = `
                     <h3>${article.title}</h3>
                     <p>${article.excerpt}</p>
-                    <a href="${article.link}" class="read-more">Read More →</a>
+                    <a href="${article.link}" target="_blank" class="read-more">Read More →</a>
                 `;
                 articlesGrid.appendChild(articleCard);
                 
@@ -809,7 +836,7 @@
                 }
             }
             
-            currentArticleSet = (currentArticleSet + 1) % Math.ceil(articles.length / 3);
+            currentArticleSet = (currentArticleSet + 1) % Math.ceil(bloggerArticles.length / 3);
         }
 
         // Initialize when DOM is loaded
@@ -820,7 +847,10 @@
                 setInterval(rotateGallery, 1000); // Rotate every 1 second
             }, 500); // Small delay to ensure DOM is ready
             
-            // Start article rotation
+            // Initialize Blogger articles
+            initializeBloggerArticles();
+            
+            // Start article rotation every 10 seconds
             setInterval(rotateArticles, 10000);
         });
 
@@ -832,6 +862,7 @@
             setTimeout(() => {
                 rotateGallery();
                 setInterval(rotateGallery, 1000);
+                initializeBloggerArticles();
             }, 500);
         }
 
