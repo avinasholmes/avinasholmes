@@ -670,28 +670,17 @@
         let currentGallerySet = 0;
         let currentLightboxIndex = 0;
 
-        // Simplified gallery function with better debugging
+        // Stop the flickering by preventing multiple intervals
+        let galleryInterval = null;
+        let galleryStarted = false;
+
+        // Simplified gallery function without console spam
         function rotateGallery() {
-            console.log('Trying to find gallery...');
-            const galleryGrid = document.querySelector('#gallery-grid');
-            const allElements = document.querySelectorAll('*[id]');
+            const galleryGrid = document.querySelector('#gallery-grid') || document.querySelector('.gallery-grid');
             
-            console.log('All elements with IDs:', Array.from(allElements).map(el => el.id));
-            
-            if (!galleryGrid) {
-                console.log('Gallery grid still not found');
-                // Try to find any element that might be the gallery
-                const possibleGallery = document.querySelector('.gallery-grid');
-                if (possibleGallery) {
-                    console.log('Found gallery by class instead');
-                    possibleGallery.id = 'gallery-grid'; // Add the ID
-                    rotateGallery(); // Try again
-                    return;
-                }
+            if (!galleryGrid || galleryStarted) {
                 return;
             }
-            
-            console.log('Gallery found! Adding photos...');
             
             // Clear and add photos
             galleryGrid.innerHTML = '';
@@ -700,22 +689,36 @@
                 const photoIndex = (currentGallerySet + i) % galleryPhotos.length;
                 const galleryItem = document.createElement('div');
                 galleryItem.className = 'gallery-item visible';
-                galleryItem.style.opacity = '1';
-                galleryItem.style.transform = 'translateY(0)';
                 
                 galleryItem.innerHTML = `
                     <img src="${galleryPhotos[photoIndex]}" 
                          alt="Gallery Photo ${photoIndex + 1}" 
                          onclick="openLightbox(${photoIndex})"
-                         style="width: 100%; height: 280px; object-fit: contain; border-radius: 10px;"
-                         onerror="this.src='data:image/svg+xml,<svg xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 250 200\\"><rect width=\\"250\\" height=\\"200\\" fill=\\"%23f0f0f0\\"/><text x=\\"125\\" y=\\"100\\" text-anchor=\\"middle\\" fill=\\"%23999\\">Photo ${photoIndex + 1}</text></svg>'">
+                         onerror="this.style.display='none'">
                 `;
                 
                 galleryGrid.appendChild(galleryItem);
             }
             
             currentGallerySet = (currentGallerySet + 1) % galleryPhotos.length;
-            console.log(`Gallery updated with photos ${currentGallerySet}-${(currentGallerySet + 2) % galleryPhotos.length}`);
+        }
+
+        // Single initialization function
+        function initializeGallery() {
+            if (galleryStarted) return;
+            
+            const galleryGrid = document.querySelector('#gallery-grid') || document.querySelector('.gallery-grid');
+            
+            if (galleryGrid) {
+                galleryStarted = true;
+                rotateGallery(); // Initial load
+                
+                // Clear any existing interval
+                if (galleryInterval) clearInterval(galleryInterval);
+                
+                // Start new interval
+                galleryInterval = setInterval(rotateGallery, 2000); // Slower - every 2 seconds
+            }
         }
 
         // Lightbox functionality
@@ -820,52 +823,28 @@
             currentArticleSet = (currentArticleSet + 1) % Math.ceil(bloggerArticles.length / 3);
         }
 
-        // Initialize with multiple attempts
-        let galleryStarted = false;
-        let attempts = 0;
-        const maxAttempts = 10;
+        // Simple one-time initialization
+        let initialized = false;
 
-        function startGallery() {
-            attempts++;
-            console.log(`Gallery start attempt ${attempts}/${maxAttempts}`);
+        function initialize() {
+            if (initialized) return;
+            initialized = true;
             
-            const galleryGrid = document.querySelector('#gallery-grid') || document.querySelector('.gallery-grid');
+            // Initialize gallery
+            setTimeout(initializeGallery, 1000);
             
-            if (galleryGrid && !galleryStarted) {
-                console.log('Gallery found! Starting rotation...');
-                galleryStarted = true;
-                rotateGallery(); // Initial load
-                setInterval(rotateGallery, 1000); // Rotate every 1 second
-            } else if (attempts < maxAttempts) {
-                console.log(`Gallery not ready yet, retrying in 1 second... (attempt ${attempts})`);
-                setTimeout(startGallery, 1000);
-            } else {
-                console.log('Gallery could not be started after maximum attempts');
-            }
+            // Initialize articles  
+            setTimeout(() => {
+                rotateArticles();
+                setInterval(rotateArticles, 10000);
+            }, 1500);
         }
 
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, starting initialization...');
-            
-            // Start gallery with delay
-            setTimeout(startGallery, 500);
-            
-            // Start articles
-            setTimeout(() => {
-                rotateArticles();
-                setInterval(rotateArticles, 10000);
-            }, 1000);
-        });
-
-        // Also try immediate start if DOM already loaded
-        if (document.readyState !== 'loading') {
-            console.log('DOM already loaded, starting immediately...');
-            setTimeout(startGallery, 500);
-            setTimeout(() => {
-                rotateArticles();
-                setInterval(rotateArticles, 10000);
-            }, 1000);
+        // Initialize when ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initialize);
+        } else {
+            initialize();
         }
 
         // Smooth scrolling for anchor links
