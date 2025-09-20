@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Personal Homepage</title>
+    <title>Avinash Holmes - Personal Homepage</title>
     <style>
         * {
             margin: 0;
@@ -42,6 +42,11 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: #2c3e50;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
         }
 
         .menu-toggle {
@@ -232,11 +237,6 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .gallery-item.visible {
             opacity: 1;
             transform: translateY(0);
         }
@@ -249,18 +249,132 @@
         .gallery-item img {
             width: 100%;
             height: 280px;
-            object-fit: contain;
+            object-fit: cover;
             transition: transform 0.3s ease;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
-        /* Lightbox styles */
+        /* About Section */
+        .about {
+            padding: 4rem 2rem;
+            background: white;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Articles Section */
+        .articles {
+            padding: 4rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .article-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .article-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: #36454F;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: #2F4F4F;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #36454F 0%, #2F4F4F 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .contact-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            animation: bounce 2s infinite;
+            z-index: 1001;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* Lightbox */
         .lightbox {
             display: none;
             position: fixed;
@@ -339,135 +453,6 @@
             background: rgba(255, 255, 255, 0.3);
         }
 
-        /* About Section */
-        .about {
-            padding: 4rem 2rem;
-            background: white;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        .about.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .about-content p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Articles Section */
-        .articles {
-            padding: 4rem 2rem;
-            background: #f8f9fa;
-        }
-
-        .articles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .article-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .article-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .article-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .article-card h3 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .article-card p {
-            color: #666;
-            margin-bottom: 1rem;
-        }
-
-        .read-more {
-            color: #36454F;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-
-        .read-more:hover {
-            color: #2F4F4F;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 4rem 2rem;
-            background: linear-gradient(135deg, #36454F 0%, #2F4F4F 100%);
-            text-align: center;
-            color: white;
-        }
-
-        .contact-btn {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            font-size: 1.1rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            margin-top: 2rem;
-        }
-
-        .contact-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            animation: bounce 2s infinite;
-            z-index: 1001;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .navbar {
@@ -496,7 +481,9 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
-        <div class="logo"><img src="holmes logo.png" alt="Holmes Logo" style="height: 40px; width: auto;"></div>
+        <div class="logo">
+            <img src="holmes logo.png" alt="Holmes Logo">
+        </div>
         <div class="menu-toggle" id="menu-toggle">
             <span class="menu-line"></span>
             <span class="menu-line"></span>
@@ -530,16 +517,8 @@
     <!-- Photo Gallery -->
     <section class="photo-gallery">
         <h2 class="section-title">Gallery</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 200'><rect width='250' height='200' fill='%23f0f0f0'/><circle cx='125' cy='80' r='30' fill='%23d0d0d0'/><rect x='75' y='120' width='100' height='60' fill='%23d0d0d0'/><text x='125' y='190' text-anchor='middle' fill='%23999' font-size='12'>Photo 1</text></svg>" alt="Gallery Photo 1">
-            </div>
-            <div class="gallery-item">
-                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 200'><rect width='250' height='200' fill='%23f5f5f5'/><polygon points='125,60 155,120 95,120' fill='%23d5d5d5'/><rect x='100' y='130' width='50' height='40' fill='%23d5d5d5'/><text x='125' y='190' text-anchor='middle' fill='%23999' font-size='12'>Photo 2</text></svg>" alt="Gallery Photo 2">
-            </div>
-            <div class="gallery-item">
-                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 200'><rect width='250' height='200' fill='%23f8f8f8'/><ellipse cx='125' cy='100' rx='60' ry='40' fill='%23d8d8d8'/><circle cx='110' cy='85' r='8' fill='%23c8c8c8'/><circle cx='140' cy='85' r='8' fill='%23c8c8c8'/><text x='125' y='190' text-anchor='middle' fill='%23999' font-size='12'>Photo 3</text></svg>" alt="Gallery Photo 3">
-            </div>
+        <div class="gallery-grid" id="gallery-grid">
+            <!-- Photos will be populated by JavaScript -->
         </div>
     </section>
 
@@ -556,21 +535,7 @@
     <section class="articles">
         <h2 class="section-title">Latest Articles</h2>
         <div class="articles-grid" id="articles-grid">
-            <div class="article-card">
-                <h3>The Poetry of Quantum Physics</h3>
-                <p>Exploring how the mysterious world of quantum mechanics mirrors the abstract beauty found in modern poetry...</p>
-                <a href="#" class="read-more">Read More →</a>
-            </div>
-            <div class="article-card">
-                <h3>Consciousness and Creativity</h3>
-                <p>Investigating the relationship between altered states of consciousness and creative breakthrough moments...</p>
-                <a href="#" class="read-more">Read More →</a>
-            </div>
-            <div class="article-card">
-                <h3>Literature in the Digital Age</h3>
-                <p>How technology is reshaping the way we create, consume, and understand literary works in the 21st century...</p>
-                <a href="#" class="read-more">Read More →</a>
-            </div>
+            <!-- Articles will be populated by JavaScript -->
         </div>
     </section>
 
@@ -592,6 +557,28 @@
     </div>
 
     <script>
+        // Your photo collection
+        const galleryPhotos = [
+            'AS_Brooklyn.JPG',
+            'AS_Church.JPG', 
+            'AS_coffee.jpg',
+            'AS_Georgia.JPG',
+            'AS_in_conferences.PNG',
+            'AS_in_library.JPG',
+            'AS_in_UCDAVIS.jpg',
+            'AS_in_vegas.jpg',
+            'AS_Liberty.JPG',
+            'AS_NYC_Church.JPG',
+            'AS_on_beach.jpg',
+            'AS_on_cruise.HEIC',
+            'AS_rafting.PNG',
+            'AS_TLV.jpg',
+            'AS_with_bear.jpg'
+        ];
+
+        let currentGallerySet = 0;
+        let currentLightboxIndex = 0;
+
         // Navigation functionality
         const menuToggle = document.getElementById('menu-toggle');
         const navMenu = document.getElementById('nav-menu');
@@ -619,106 +606,24 @@
             }
         });
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        // Observe gallery items
-        document.querySelectorAll('.gallery-item').forEach((item, index) => {
-            item.style.transitionDelay = `${index * 0.2}s`;
-            observer.observe(item);
-        });
-
-        // Observe about section
-        observer.observe(document.querySelector('.about'));
-
-        // Observe article cards
-        document.querySelectorAll('.article-card').forEach((card, index) => {
-            card.style.transitionDelay = `${index * 0.1}s`;
-            observer.observe(card);
-        });
-
-        // Your photo collection
-        const galleryPhotos = [
-            'AS_Brooklyn.JPG',
-            'AS_Church.JPG', 
-            'AS_coffee.jpg',
-            'AS_Georgia.JPG',
-            'AS_in_conferences.PNG',
-            'AS_in_library.JPG',
-            'AS_in_UCDAVIS.jpg',
-            'AS_in_vegas.jpg',
-            'AS_Liberty.JPG',
-            'AS_NYC_Church.JPG',
-            'AS_on_beach.jpg',
-            'AS_on_cruise.HEIC',
-            'AS_rafting.PNG',
-            'AS_TLV.jpg',
-            'AS_with_bear.jpg'
-        ];
-
-        let currentGallerySet = 0;
-        let currentLightboxIndex = 0;
-
-        // Stop the flickering by preventing multiple intervals
-        let galleryInterval = null;
-        let galleryStarted = false;
-
-        // Simplified gallery function without console spam
+        // Simple gallery rotation
         function rotateGallery() {
-            const galleryGrid = document.querySelector('#gallery-grid') || document.querySelector('.gallery-grid');
+            const galleryGrid = document.getElementById('gallery-grid');
+            if (!galleryGrid) return;
             
-            if (!galleryGrid || galleryStarted) {
-                return;
-            }
-            
-            // Clear and add photos
             galleryGrid.innerHTML = '';
             
             for (let i = 0; i < 3; i++) {
                 const photoIndex = (currentGallerySet + i) % galleryPhotos.length;
                 const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item visible';
-                
+                galleryItem.className = 'gallery-item';
                 galleryItem.innerHTML = `
-                    <img src="${galleryPhotos[photoIndex]}" 
-                         alt="Gallery Photo ${photoIndex + 1}" 
-                         onclick="openLightbox(${photoIndex})"
-                         onerror="this.style.display='none'">
+                    <img src="${galleryPhotos[photoIndex]}" alt="Gallery Photo ${photoIndex + 1}" onclick="openLightbox(${photoIndex})">
                 `;
-                
                 galleryGrid.appendChild(galleryItem);
             }
             
             currentGallerySet = (currentGallerySet + 1) % galleryPhotos.length;
-        }
-
-        // Single initialization function
-        function initializeGallery() {
-            if (galleryStarted) return;
-            
-            const galleryGrid = document.querySelector('#gallery-grid') || document.querySelector('.gallery-grid');
-            
-            if (galleryGrid) {
-                galleryStarted = true;
-                rotateGallery(); // Initial load
-                
-                // Clear any existing interval
-                if (galleryInterval) clearInterval(galleryInterval);
-                
-                // Start new interval
-                galleryInterval = setInterval(rotateGallery, 2000); // Slower - every 2 seconds
-            }
         }
 
         // Lightbox functionality
@@ -727,45 +632,31 @@
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             
-            if (lightbox && lightboxImg) {
-                lightboxImg.src = galleryPhotos[index];
-                lightbox.classList.add('active');
-                
-                // Prevent body scroll
-                document.body.style.overflow = 'hidden';
-            }
+            lightboxImg.src = galleryPhotos[index];
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
-            if (lightbox) {
-                lightbox.classList.remove('active');
-                
-                // Restore body scroll
-                document.body.style.overflow = 'auto';
-            }
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
 
         function nextImage() {
             currentLightboxIndex = (currentLightboxIndex + 1) % galleryPhotos.length;
-            const lightboxImg = document.getElementById('lightbox-img');
-            if (lightboxImg) {
-                lightboxImg.src = galleryPhotos[currentLightboxIndex];
-            }
+            document.getElementById('lightbox-img').src = galleryPhotos[currentLightboxIndex];
         }
 
         function prevImage() {
             currentLightboxIndex = (currentLightboxIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
-            const lightboxImg = document.getElementById('lightbox-img');
-            if (lightboxImg) {
-                lightboxImg.src = galleryPhotos[currentLightboxIndex];
-            }
+            document.getElementById('lightbox-img').src = galleryPhotos[currentLightboxIndex];
         }
 
         // Keyboard navigation for lightbox
         document.addEventListener('keydown', function(e) {
             const lightbox = document.getElementById('lightbox');
-            if (lightbox && lightbox.classList.contains('active')) {
+            if (lightbox.classList.contains('active')) {
                 if (e.key === 'ArrowRight') {
                     nextImage();
                 } else if (e.key === 'ArrowLeft') {
@@ -776,8 +667,8 @@
             }
         });
 
-        // Fallback articles (will try to fetch from Blogger, but these as backup)
-        const fallbackArticles = [
+        // Articles
+        const articles = [
             {
                 title: "FIVE SUPERFOOD SEEDS THAT FIGHT AGING AND KEEP YOU HEALTHY",
                 excerpt: "स्वस्थ रहना और स्वयं को स्वस्थ रखना हर किसी की जिम्मेदारी होती है, और इसके लिए सही आहार-पान बहुत जरूरी है...",
@@ -795,57 +686,33 @@
             }
         ];
 
-        // Use fallback articles for now (Blogger integration can be added later)
-        let currentArticleSet = 0;
-        let bloggerArticles = fallbackArticles;
-
-        function rotateArticles() {
+        function loadArticles() {
             const articlesGrid = document.getElementById('articles-grid');
-            if (!articlesGrid || bloggerArticles.length === 0) return;
-            
-            const startIndex = currentArticleSet * 3;
-            const endIndex = Math.min(startIndex + 3, bloggerArticles.length);
+            if (!articlesGrid) return;
             
             articlesGrid.innerHTML = '';
             
-            for (let i = startIndex; i < endIndex; i++) {
-                const article = bloggerArticles[i];
+            articles.forEach(article => {
                 const articleCard = document.createElement('div');
-                articleCard.className = 'article-card visible';
+                articleCard.className = 'article-card';
                 articleCard.innerHTML = `
                     <h3>${article.title}</h3>
                     <p>${article.excerpt}</p>
                     <a href="${article.link}" target="_blank" class="read-more">Read More →</a>
                 `;
                 articlesGrid.appendChild(articleCard);
-            }
-            
-            currentArticleSet = (currentArticleSet + 1) % Math.ceil(bloggerArticles.length / 3);
+            });
         }
 
-        // Simple one-time initialization
-        let initialized = false;
-
-        function initialize() {
-            if (initialized) return;
-            initialized = true;
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load gallery
+            rotateGallery();
+            setInterval(rotateGallery, 3000); // Rotate every 3 seconds
             
-            // Initialize gallery
-            setTimeout(initializeGallery, 1000);
-            
-            // Initialize articles  
-            setTimeout(() => {
-                rotateArticles();
-                setInterval(rotateArticles, 10000);
-            }, 1500);
-        }
-
-        // Initialize when ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initialize);
-        } else {
-            initialize();
-        }
+            // Load articles
+            loadArticles();
+        });
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -859,13 +726,6 @@
                     });
                 }
             });
-        });
-
-        // Parallax effect for hero section
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
-            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
         });
     </script>
 </body>
