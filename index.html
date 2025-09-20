@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Personal Homepage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-line {
+            width: 25px;
+            height: 3px;
+            background: #2c3e50;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active .menu-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active .menu-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .menu-line:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+            padding: 80px 2rem 2rem;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-item {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            transform: translateX(20px);
+            opacity: 0;
+        }
+
+        .nav-menu.active .nav-item {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .nav-menu.active .nav-item:nth-child(1) { transition-delay: 0.1s; }
+        .nav-menu.active .nav-item:nth-child(2) { transition-delay: 0.2s; }
+        .nav-menu.active .nav-item:nth-child(3) { transition-delay: 0.3s; }
+
+        .nav-item:hover {
+            transform: translateX(10px);
+            color: #f39c12;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .main-photo {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease;
+        }
+
+        .main-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-text {
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .welcome-text h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-text p {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Photo Gallery */
+        .photo-gallery {
+            padding: 4rem 2rem;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* About Section */
+        .about {
+            padding: 4rem 2rem;
+            background: white;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .about.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Articles Section */
+        .articles {
+            padding: 4rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .article-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .article-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .article-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: #764ba2;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .contact-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .welcome-text h1 {
+                font-size: 2rem;
+            }
+
+            .welcome-text p {
+                font-size: 1rem;
+            }
+
+            .main-photo {
+                width: 250px;
+                height: 250px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">Your Logo</div>
+        <div class="menu-toggle" id="menu-toggle">
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+        </div>
+    </nav>
+
+    <div class="nav-menu" id="nav-menu">
+        <a href="#science" class="nav-item">Science and Literature</a>
+        <a href="#thirdeye" class="nav-item">Third Eye</a>
+        <a href="#store" class="nav-item">Holmes Store</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23e0e0e0'/><circle cx='150' cy='120' r='40' fill='%23c0c0c0'/><ellipse cx='150' cy='220' rx='80' ry='40' fill='%23c0c0c0'/><text x='150' y='260' text-anchor='middle' fill='%23999' font-size='16'>Your Photo</text></svg>" alt="Your Main Photo" class="main-photo">
+            <div class="welcome-text">
+                <h1>Welcome to My World</h1>
+                <p>Exploring the intersection of science, literature, and consciousness</p>
+                <p>Join me on this journey of discovery and enlightenment</p>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="20" height="30" viewBox="0 0 20 30" fill="currentColor">
+                <path d="M10 0L15 8H5L10 0Z"/>
+                <path d="M10 15L15 23H5L10 15Z"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="photo-gallery">
+        <h2 class="section-title">Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 200'><rect width='250' height='200' fill='%23f0f0f0'/><circle cx='125' cy='80' r='30' fill='%23d0d0d0'/><rect x='75' y='120' width='100' height='60' fill='%23d0d0d0'/><text x='125' y='190' text-anchor='middle' fill='%23999' font-size='12'>Photo 1</text></svg>" alt="Gallery Photo 1">
+            </div>
+            <div class="gallery-item">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 200'><rect width='250' height='200' fill='%23f5f5f5'/><polygon points='125,60 155,120 95,120' fill='%23d5d5d5'/><rect x='100' y='130' width='50' height='40' fill='%23d5d5d5'/><text x='125' y='190' text-anchor='middle' fill='%23999' font-size='12'>Photo 2</text></svg>" alt="Gallery Photo 2">
+            </div>
+            <div class="gallery-item">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 200'><rect width='250' height='200' fill='%23f8f8f8'/><ellipse cx='125' cy='100' rx='60' ry='40' fill='%23d8d8d8'/><circle cx='110' cy='85' r='8' fill='%23c8c8c8'/><circle cx='140' cy='85' r='8' fill='%23c8c8c8'/><text x='125' y='190' text-anchor='middle' fill='%23999' font-size='12'>Photo 3</text></svg>" alt="Gallery Photo 3">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2 class="section-title">About</h2>
+            <p>Welcome to my digital sanctuary, where curiosity meets creativity and knowledge transcends boundaries. I am passionate about exploring the fascinating connections between scientific discovery and literary expression.</p>
+            <p>Through my work, I delve deep into the mysteries of consciousness, the beauty of language, and the endless possibilities that emerge when we open our minds to new perspectives. Join me as we journey together through the realms of imagination and understanding.</p>
+        </div>
+    </section>
+
+    <!-- Articles Section -->
+    <section class="articles">
+        <h2 class="section-title">Latest Articles</h2>
+        <div class="articles-grid" id="articles-grid">
+            <div class="article-card">
+                <h3>The Poetry of Quantum Physics</h3>
+                <p>Exploring how the mysterious world of quantum mechanics mirrors the abstract beauty found in modern poetry...</p>
+                <a href="#" class="read-more">Read More →</a>
+            </div>
+            <div class="article-card">
+                <h3>Consciousness and Creativity</h3>
+                <p>Investigating the relationship between altered states of consciousness and creative breakthrough moments...</p>
+                <a href="#" class="read-more">Read More →</a>
+            </div>
+            <div class="article-card">
+                <h3>Literature in the Digital Age</h3>
+                <p>How technology is reshaping the way we create, consume, and understand literary works in the 21st century...</p>
+                <a href="#" class="read-more">Read More →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <h2 class="section-title">Let's Connect</h2>
+        <p>Ready to embark on a journey of discovery together? I'd love to hear from you.</p>
+        <a href="mailto:your.email@example.com" class="contact-btn">Contact Me</a>
+    </section>
+
+    <script>
+        // Navigation functionality
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const navbar = document.getElementById('navbar');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on nav items
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe gallery items
+        document.querySelectorAll('.gallery-item').forEach((item, index) => {
+            item.style.transitionDelay = `${index * 0.2}s`;
+            observer.observe(item);
+        });
+
+        // Observe about section
+        observer.observe(document.querySelector('.about'));
+
+        // Observe article cards
+        document.querySelectorAll('.article-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Dynamic article loading simulation
+        const articles = [
+            {
+                title: "The Poetry of Quantum Physics",
+                excerpt: "Exploring how the mysterious world of quantum mechanics mirrors the abstract beauty found in modern poetry...",
+                link: "#"
+            },
+            {
+                title: "Consciousness and Creativity", 
+                excerpt: "Investigating the relationship between altered states of consciousness and creative breakthrough moments...",
+                link: "#"
+            },
+            {
+                title: "Literature in the Digital Age",
+                excerpt: "How technology is reshaping the way we create, consume, and understand literary works in the 21st century...",
+                link: "#"
+            },
+            {
+                title: "The Science of Storytelling",
+                excerpt: "Understanding how our brains are wired to create and consume narratives, and what this means for writers...",
+                link: "#"
+            },
+            {
+                title: "Meditation and Mental Clarity",
+                excerpt: "Examining the neuroscience behind mindfulness practices and their impact on cognitive function...",
+                link: "#"
+            }
+        ];
+
+        // Rotate articles every 10 seconds
+        let currentArticleSet = 0;
+        function rotateArticles() {
+            const articlesGrid = document.getElementById('articles-grid');
+            const startIndex = currentArticleSet * 3;
+            const endIndex = Math.min(startIndex + 3, articles.length);
+            
+            articlesGrid.innerHTML = '';
+            
+            for (let i = startIndex; i < endIndex; i++) {
+                const article = articles[i];
+                const articleCard = document.createElement('div');
+                articleCard.className = 'article-card';
+                articleCard.innerHTML = `
+                    <h3>${article.title}</h3>
+                    <p>${article.excerpt}</p>
+                    <a href="${article.link}" class="read-more">Read More →</a>
+                `;
+                articlesGrid.appendChild(articleCard);
+                observer.observe(articleCard);
+            }
+            
+            currentArticleSet = (currentArticleSet + 1) % Math.ceil(articles.length / 3);
+        }
+
+        // Start article rotation
+        setInterval(rotateArticles, 10000);
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+    </script>
+</body>
+</html>
