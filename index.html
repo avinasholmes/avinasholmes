@@ -78,7 +78,7 @@
             right: -300px;
             width: 300px;
             height: 100vh;
-            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            background: linear-gradient(135deg, #36454F 0%, #2F4F4F 100%);
             transition: all 0.3s ease;
             padding: 80px 2rem 2rem;
             box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
@@ -117,7 +117,7 @@
         /* Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            background: linear-gradient(135deg, #36454F 0%, #2F4F4F 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -193,33 +193,6 @@
             font-weight: 500;
         }
 
-        .welcome-message {
-            background: rgba(255, 255, 255, 0.95);
-            color: #666;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-top: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .welcome-message h2 {
-            font-size: 2rem;
-            color: #A0847C;
-            margin-bottom: 1rem;
-            font-weight: 300;
-        }
-
-        .welcome-message p {
-            font-size: 1.1rem;
-            color: #666;
-            text-shadow: none;
-            margin-bottom: 0.8rem;
-            line-height: 1.6;
-        }
-
         /* Photo Gallery */
         .photo-gallery {
             padding: 4rem 2rem;
@@ -275,13 +248,95 @@
 
         .gallery-item img {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
+            height: 280px;
+            object-fit: contain;
             transition: transform 0.3s ease;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1.05);
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            padding: 1rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox-prev {
+            left: 2rem;
+        }
+
+        .lightbox-next {
+            right: 2rem;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         /* About Section */
@@ -370,7 +425,7 @@
         /* Contact Section */
         .contact {
             padding: 4rem 2rem;
-            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            background: linear-gradient(135deg, #36454F 0%, #2F4F4F 100%);
             text-align: center;
             color: white;
         }
@@ -525,6 +580,16 @@
         <a href="mailto:your.email@example.com" class="contact-btn">Contact Me</a>
     </section>
 
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+            <button class="lightbox-nav lightbox-prev" onclick="prevImage()">&larr;</button>
+            <img id="lightbox-img" src="" alt="">
+            <button class="lightbox-nav lightbox-next" onclick="nextImage()">&rarr;</button>
+        </div>
+    </div>
+
     <script>
         // Navigation functionality
         const menuToggle = document.getElementById('menu-toggle');
@@ -582,62 +647,99 @@
             observer.observe(card);
         });
 
-        // Dynamic article loading simulation
-        const articles = [
-            {
-                title: "The Poetry of Quantum Physics",
-                excerpt: "Exploring how the mysterious world of quantum mechanics mirrors the abstract beauty found in modern poetry...",
-                link: "#"
-            },
-            {
-                title: "Consciousness and Creativity", 
-                excerpt: "Investigating the relationship between altered states of consciousness and creative breakthrough moments...",
-                link: "#"
-            },
-            {
-                title: "Literature in the Digital Age",
-                excerpt: "How technology is reshaping the way we create, consume, and understand literary works in the 21st century...",
-                link: "#"
-            },
-            {
-                title: "The Science of Storytelling",
-                excerpt: "Understanding how our brains are wired to create and consume narratives, and what this means for writers...",
-                link: "#"
-            },
-            {
-                title: "Meditation and Mental Clarity",
-                excerpt: "Examining the neuroscience behind mindfulness practices and their impact on cognitive function...",
-                link: "#"
-            }
+        // Your photo collection
+        const galleryPhotos = [
+            'AS_Brooklyn.JPG',
+            'AS_Church.JPG', 
+            'AS_coffee.jpg',
+            'AS_Georgia.JPG',
+            'AS_in_conferences.PNG',
+            'AS_in_library.JPG',
+            'AS_in_UCDAVIS.jpg',
+            'AS_in_vegas.jpg',
+            'AS_Liberty.JPG',
+            'AS_NYC_Church.JPG',
+            'AS_on_beach.jpg',
+            'AS_on_cruise.HEIC',
+            'AS_rafting.PNG',
+            'AS_TLV.jpg',
+            'AS_with_bear.jpg'
         ];
 
-        // Rotate articles every 10 seconds
-        let currentArticleSet = 0;
-        function rotateArticles() {
-            const articlesGrid = document.getElementById('articles-grid');
-            const startIndex = currentArticleSet * 3;
-            const endIndex = Math.min(startIndex + 3, articles.length);
+        let currentGallerySet = 0;
+        let currentLightboxIndex = 0;
+
+        // Auto-rotate gallery photos every 1 second
+        function rotateGallery() {
+            const galleryGrid = document.getElementById('gallery-grid');
+            galleryGrid.innerHTML = '';
             
-            articlesGrid.innerHTML = '';
-            
-            for (let i = startIndex; i < endIndex; i++) {
-                const article = articles[i];
-                const articleCard = document.createElement('div');
-                articleCard.className = 'article-card';
-                articleCard.innerHTML = `
-                    <h3>${article.title}</h3>
-                    <p>${article.excerpt}</p>
-                    <a href="${article.link}" class="read-more">Read More →</a>
+            for (let i = 0; i < 3; i++) {
+                const photoIndex = (currentGallerySet + i) % galleryPhotos.length;
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.innerHTML = `
+                    <img src="${galleryPhotos[photoIndex]}" alt="Gallery Photo ${photoIndex + 1}" onclick="openLightbox(${photoIndex})">
                 `;
-                articlesGrid.appendChild(articleCard);
-                observer.observe(articleCard);
+                galleryGrid.appendChild(galleryItem);
+                
+                // Add animation delay
+                setTimeout(() => {
+                    galleryItem.classList.add('visible');
+                }, i * 100);
             }
             
-            currentArticleSet = (currentArticleSet + 1) % Math.ceil(articles.length / 3);
+            currentGallerySet = (currentGallerySet + 1) % galleryPhotos.length;
         }
 
-        // Start article rotation
-        setInterval(rotateArticles, 10000);
+        // Lightbox functionality
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            
+            lightboxImg.src = galleryPhotos[index];
+            lightbox.classList.add('active');
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+
+        function nextImage() {
+            currentLightboxIndex = (currentLightboxIndex + 1) % galleryPhotos.length;
+            document.getElementById('lightbox-img').src = galleryPhotos[currentLightboxIndex];
+        }
+
+        function prevImage() {
+            currentLightboxIndex = (currentLightboxIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
+            document.getElementById('lightbox-img').src = galleryPhotos[currentLightboxIndex];
+        }
+
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'ArrowRight') {
+                    nextImage();
+                } else if (e.key === 'ArrowLeft') {
+                    prevImage();
+                } else if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            }
+        });
+
+        // Start gallery rotation
+        rotateGallery(); // Initial load
+        setInterval(rotateGallery, 1000); // Rotate every 1 second
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
