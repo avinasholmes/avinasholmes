@@ -284,6 +284,144 @@
             margin-bottom: 20px;
         }
 
+        /* Blog Section - NEW */
+        .blog-section {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .blog-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .blog-control-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .blog-control-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .blog-control-btn.active {
+            background: #2c3e50;
+        }
+
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .blog-post {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-post-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-post-content {
+            padding: 25px;
+        }
+
+        .blog-post-category {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+
+        .blog-post-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .blog-post-meta {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .blog-post-excerpt {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .blog-post-link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .blog-post-link:hover {
+            color: #2980b9;
+        }
+
+        .load-more-btn {
+            display: block;
+            margin: 0 auto;
+            padding: 15px 30px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .load-more-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .load-more-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* Articles Section */
         .articles-section {
             padding: 80px 20px;
@@ -439,6 +577,15 @@
             .gallery-container {
                 grid-template-columns: 1fr;
             }
+
+            .blog-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .blog-posts {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -458,6 +605,7 @@
     <!-- Navigation Menu -->
     <nav class="nav-menu" id="navMenu">
         <a href="https://avinasholmes.blogspot.com" target="_blank" class="nav-link">Science and Literature</a>
+        <a href="#blog" class="nav-link">Blog Posts</a>
         <a href="#" class="nav-link">Third Eye</a>
         <a href="#" class="nav-link">Holmes Store</a>
     </nav>
@@ -467,7 +615,7 @@
         <img src="AS_coffee.jpg" alt="Avinash's Photo" class="profile-photo">
         <h1 class="hero-title">BIOLOGIST, RESEARCHER, WRITER,<br>PHOTOGRAPHER, HODOPHILE</h1>
         <p class="hero-subtitle">Hola Amigos!</p>
-        <div class="scroll-hint">↑</div>
+        <div class="scroll-hint">↓</div>
     </section>
 
     <!-- Gallery Section -->
@@ -501,6 +649,21 @@
         </div>
     </section>
 
+    <!-- Blog Section - NEW -->
+    <section class="blog-section" id="blog">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h2 class="section-title">Blog Posts</h2>
+            </div>
+            
+            <div class="blog-posts" id="blogPosts">
+                <!-- Blog posts will be loaded here -->
+            </div>
+            
+            <button class="load-more-btn" id="loadMoreBtn" onclick="loadMorePosts()">Load More Posts</button>
+        </div>
+    </section>
+
     <!-- Articles Section -->
     <section class="articles-section">
         <div class="about-content">
@@ -529,7 +692,7 @@
     </div>
 
     <script>
-        // Photo collection - Updated with new photos
+        // Photo collection
         const photos = [
             'AS_BROWN.jpg', 'AS_georgia.jpg', 'AS_Holmes.jpg', 'AS_in_conferences.PNG',
             'AS_in_library.JPG', 'AS_monkeys.jpg', 'AS_on_beach.jpg', 'AS_rafting.PNG',
@@ -542,18 +705,90 @@
                 title: "FIVE SUPERFOOD SEEDS THAT FIGHT AGING AND KEEP YOU HEALTHY",
                 excerpt: "स्वस्थ रहना और स्वयं को स्वस्थ रखना हर किसी की जिम्मेदारी होती है, और इसके लिए सही आहार-पान बहुत जरूरी है...",
                 link: "https://avinasholmes.blogspot.com"
+            }
+        ];
+
+        // Blog Posts Data - REAL POSTS FROM YOUR BLOG
+        const blogPosts = [
+            {
+                id: 1,
+                title: "Five Superfood Seeds That Fight Aging and Keep You Healthy",
+                date: "2025-09-15",
+                excerpt: "स्वस्थ रहना और लंबी उम्र पाना हर किसी की ख्वाहिश होती है, और इसके लिए सही खान-पान बहुत जरूरी है। सूरजमुखी के बीज, कद्दू के बीज, चिया बीज, अलसी के बीज और तिल के बीज के गुणों से भरपूर फायदे...",
+                image: "AS_Holmes.jpg",
+                link: "https://avinasholmes.blogspot.com/2025/09/five-superfood-seeds-that-fight-aging.html"
             },
             {
-                title: "The Science of Storytelling",
-                excerpt: "Understanding how our brains are wired to create and consume narratives, and what this means for writers...",
+                id: 2,
+                title: "My Research Journey: From Plant Biology to Aging",
+                date: "2025-07-15",
+                excerpt: "Reflecting on my transition from studying Arabidopsis thaliana to exploring the molecular mechanisms of aging in human cells.",
+                image: "AS_in_conferences.PNG",
                 link: "https://avinasholmes.blogspot.com"
             },
             {
-                title: "Meditation and Mental Clarity",
-                excerpt: "Examining the neuroscience behind mindfulness practices and their impact on cognitive function...",
+                id: 3,
+                title: "Travel Photography: Capturing Life's Moments",
+                date: "2025-06-10",
+                excerpt: "My adventures with camera in hand, documenting beautiful moments from around the world and the stories behind each photograph.",
+                image: "AS_on_beach.jpg",
+                link: "https://avinasholmes.blogspot.com"
+            },
+            {
+                id: 4,
+                title: "The Intersection of Science and Spirituality",
+                date: "2025-05-25",
+                excerpt: "Exploring how scientific inquiry and spiritual seeking can coexist and complement each other in our understanding of existence.",
+                image: "AS_tiberius.jpg",
+                link: "https://avinasholmes.blogspot.com"
+            },
+            {
+                id: 5,
+                title: "Adventures in Research: Cryo-EM and Beyond",
+                date: "2025-05-01",
+                excerpt: "My experiences working with cutting-edge technology like Cryo-electron Microscopy and its applications in structural biology.",
+                image: "AS_BROWN.jpg",
                 link: "https://avinasholmes.blogspot.com"
             }
         ];
+
+        // Blog functionality - UPDATED
+        let postsPerPage = 3;
+        let currentPostIndex = 0;
+
+        function loadBlogPosts() {
+            const container = document.getElementById('blogPosts');
+            const postsToShow = blogPosts.slice(0, currentPostIndex + postsPerPage);
+            container.innerHTML = '';
+            
+            postsToShow.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'blog-post';
+                postElement.innerHTML = `
+                    <img src="${post.image}" alt="${post.title}" class="blog-post-image">
+                    <div class="blog-post-content">
+                        <h3 class="blog-post-title">${post.title}</h3>
+                        <div class="blog-post-meta">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+                        <p class="blog-post-excerpt">${post.excerpt}</p>
+                        <a href="${post.link}" target="_blank" class="blog-post-link">Read More →</a>
+                    </div>
+                `;
+                container.appendChild(postElement);
+            });
+            
+            // Update load more button
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (postsToShow.length >= blogPosts.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
+        }
+
+        function loadMorePosts() {
+            currentPostIndex += postsPerPage;
+            loadBlogPosts();
+        }
 
         let currentPhotoIndex = 0;
         let currentGallerySet = 0;
@@ -666,6 +901,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadGallery();
             loadArticles();
+            loadBlogPosts(); // NEW
         });
 
         // Handle scroll arrow behavior
