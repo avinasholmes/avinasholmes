@@ -74,10 +74,13 @@
             transition: right 0.3s ease;
             padding: 80px 30px 30px;
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            pointer-events: auto;
         }
 
         .nav-menu.open {
             right: 0;
+            pointer-events: auto;
         }
 
         .nav-link {
@@ -88,6 +91,9 @@
             font-size: 1.1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             transition: color 0.3s;
+            position: relative;
+            z-index: 2001;
+            pointer-events: auto;
         }
 
         .nav-link:hover {
@@ -140,6 +146,7 @@
             background-size: 950px 150px;
             animation: sparkle 8s linear infinite;
             opacity: 0.6;
+            z-index: 1;
         }
 
         @keyframes sparkle {
