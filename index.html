@@ -105,12 +105,52 @@
             text-align: center;
             color: white;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ffffff, transparent),
+                radial-gradient(1px 1px at 200px 120px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 250px 60px, #ffffff, transparent),
+                radial-gradient(1px 1px at 300px 20px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 350px 100px, #ffffff, transparent),
+                radial-gradient(2px 2px at 400px 40px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 450px 90px, #ffffff, transparent),
+                radial-gradient(1px 1px at 500px 15px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 550px 70px, #ffffff, transparent),
+                radial-gradient(1px 1px at 600px 110px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 650px 35px, #ffffff, transparent),
+                radial-gradient(2px 2px at 700px 85px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 750px 50px, #ffffff, transparent),
+                radial-gradient(1px 1px at 800px 20px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 850px 95px, #ffffff, transparent),
+                radial-gradient(1px 1px at 900px 65px, rgba(255,255,255,0.8), transparent);
+            background-repeat: repeat;
+            background-size: 950px 150px;
+            animation: sparkle 8s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes sparkle {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-150px); }
         }
 
         .profile-photo {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
+            width: 320px;
+            height: 320px;
+            border-radius: 20px;
             object-fit: cover;
             border: 4px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -139,12 +179,25 @@
         }
 
         .scroll-hint {
-            position: absolute;
+            position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             color: rgba(255, 255, 255, 0.7);
             animation: bounce 2s infinite;
+            z-index: 1001;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-hint.scrolled {
+            top: 20px;
+            bottom: auto;
+            color: #2c3e50;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         @keyframes bounce {
@@ -407,7 +460,7 @@
         <img src="AS_coffee.jpg" alt="Avinash's Photo" class="profile-photo">
         <h1 class="hero-title">BIOLOGIST, RESEARCHER, WRITER,<br>PHOTOGRAPHER, HODOPHILE</h1>
         <p class="hero-subtitle">Hola Amigos!</p>
-        <div class="scroll-hint">↓</div>
+        <div class="scroll-hint">↑</div>
     </section>
 
     <!-- Gallery Section -->
@@ -455,13 +508,11 @@
     </div>
 
     <script>
-        // Photo collection
+        // Photo collection - Updated with new photos
         const photos = [
-            'AS_Brooklyn.JPG', 'AS_Church.JPG', 'AS_coffee.jpg', 'AS_Georgia.JPG',
-            'AS_in_conferences.PNG', 'AS_in_library.JPG', 'AS_in_UCDAVIS.jpg',
-            'AS_in_vegas.jpg', 'AS_Liberty.JPG', 'AS_NYC_Church.JPG',
-            'AS_on_beach.jpg', 'AS_on_cruise.HEIC', 'AS_rafting.PNG',
-            'AS_TLV.jpg', 'AS_with_bear.jpg'
+            'AS_BROWN.jpg', 'AS_georgia.jpg', 'AS_Holmes.jpg', 'AS_in_conferences.PNG',
+            'AS_in_library.JPG', 'AS_monkeys.jpg', 'AS_on_beach.jpg', 'AS_rafting.PNG',
+            'AS_roger.jpg', 'AS_tiberius.jpg'
         ];
 
         // Articles data
@@ -594,6 +645,17 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadGallery();
             loadArticles();
+        });
+
+        // Handle scroll arrow behavior
+        const scrollHint = document.querySelector('.scroll-hint');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                scrollHint.classList.add('scrolled');
+            } else {
+                scrollHint.classList.remove('scrolled');
+            }
         });
 
         // Smooth scrolling
