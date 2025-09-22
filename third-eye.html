@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Third Eye - Macro Photography | Avinash Holmes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 80px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            min-height: 50vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #3498db;
+        }
+
+        .gallery-description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .photo-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-info {
+            padding: 20px;
+        }
+
+        .photo-title {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .photo-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .view-full-gallery {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="holmes logo.png" alt="Holmes Logo">
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="https://avinasholmes.blogspot.com" target="_blank">Blog</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Third Eye</h1>
+        <p>Macro Photography - Discovering the extraordinary in the microscopic world around us</p>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <h2 class="section-title">Macro Photography Collection</h2>
+            <p class="gallery-description">
+                Through the lens of macro photography, I explore the intricate details and hidden beauty 
+                of nature's smallest subjects. Each image reveals a world often invisible to the naked eye.
+            </p>
+            
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Sample macro photos - replace with your actual images -->
+                <div class="photo-card" onclick="openPixisetGallery()">
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=250&fit=crop" alt="Macro Photography Sample">
+                    <div class="photo-info">
+                        <h3 class="photo-title">Nature's Geometry</h3>
+                        <p class="photo-description">Exploring the mathematical patterns found in natural structures.</p>
+                    </div>
+                </div>
+
+                <div class="photo-card" onclick="openPixisetGallery()">
+                    <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&h=250&fit=crop" alt="Macro Photography Sample">
+                    <div class="photo-info">
+                        <h3 class="photo-title">Microscopic Worlds</h3>
+                        <p class="photo-description">Revealing the hidden complexity in everyday objects.</p>
+                    </div>
+                </div>
+
+                <div class="photo-card" onclick="openPixisetGallery()">
+                    <img src="https://images.unsplash.com/photo-1567427018141-95e20fae2a59?w=400&h=250&fit=crop" alt="Macro Photography Sample">
+                    <div class="photo-info">
+                        <h3 class="photo-title">Botanical Details</h3>
+                        <p class="photo-description">Capturing the intricate structures of plant life.</p>
+                    </div>
+                </div>
+
+                <div class="photo-card" onclick="openPixisetGallery()">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop" alt="Macro Photography Sample">
+                    <div class="photo-info">
+                        <h3 class="photo-title">Textural Explorations</h3>
+                        <p class="photo-description">Discovering beauty in surface textures and patterns.</p>
+                    </div>
+                </div>
+
+                <div class="photo-card" onclick="openPixisetGallery()">
+                    <img src="https://images.unsplash.com/photo-1602080858428-57174f9431cf?w=400&h=250&fit=crop" alt="Macro Photography Sample">
+                    <div class="photo-info">
+                        <h3 class="photo-title">Abstract Macro</h3>
+                        <p class="photo-description">When reality becomes abstract through magnification.</p>
+                    </div>
+                </div>
+
+                <div class="photo-card" onclick="openPixisetGallery()">
+                    <img src="https://images.unsplash.com/photo-1551731409-43eb3e517a1a?w=400&h=250&fit=crop" alt="Macro Photography Sample">
+                    <div class="photo-info">
+                        <h3 class="photo-title">Natural Symmetry</h3>
+                        <p class="photo-description">Perfect symmetry found in nature's designs.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="view-full-gallery">
+                <a href="https://holmes87.pixieset.com/macros/" target="_blank" class="cta-button">
+                    View Complete Gallery on Pixieset
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function openPixisetGallery() {
+            window.open('https://holmes87.pixieset.com/macros/', '_blank');
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.photo-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
