@@ -595,6 +595,7 @@
         <div class="logo">
             <img src="holmes logo.png" alt="Holmes Logo">
         </div>
+        <button id="dont-click-btn" style="background: rgba(231, 76, 60, 0.8); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 14px; margin-left: 15px; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">Don't click here :P</button>
         <button class="menu-btn" id="menuBtn">
             <span></span>
             <span></span>
@@ -612,7 +613,6 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <canvas id="leaves" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none;"></canvas>
         <img src="AS_coffee.jpg" alt="Avinash's Photo" class="profile-photo">
         <h1 class="hero-title">BIOLOGIST, RESEARCHER, WRITER,<br>PHOTOGRAPHER, HODOPHILE</h1>
         <p class="hero-subtitle">Hola Amigos!</p>
@@ -902,8 +902,60 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadGallery();
             loadArticles();
-            loadBlogPosts(); // NEW
+            loadBlogPosts();
+            initDontClickButton(); // Initialize the "Don't click" button
         });
+
+        // Gravity Drop Effect
+        function gravityDrop() {
+            const elements = document.querySelectorAll('h1, h2, h3, img, p, .photo-item, .blog-post, .article-card');
+            
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    el.style.transform = `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`;
+                    el.style.opacity = '0';
+                }, index * 50);
+            });
+            
+            setTimeout(() => {
+                elements.forEach(el => {
+                    el.style.transform = '';
+                    el.style.opacity = '';
+                    el.style.transition = '';
+                });
+            }, 4000);
+        }
+
+        // Initialize "Don't click here" button
+        function initDontClickButton() {
+            const button = document.getElementById('dont-click-btn');
+            
+            // Add hover effect
+            button.addEventListener('mouseenter', function() {
+                this.style.background = 'rgba(192, 57, 43, 0.9)';
+                this.style.transform = 'scale(1.05)';
+                this.textContent = 'I said don\'t click! 😏';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.background = 'rgba(231, 76, 60, 0.8)';
+                this.style.transform = 'scale(1)';
+                this.textContent = 'Don\'t click here :P';
+            });
+            
+            // Add click event
+            button.addEventListener('click', function() {
+                this.textContent = 'Oops! You clicked it! 🙈';
+                this.style.background = 'rgba(46, 204, 113, 0.8)';
+                gravityDrop();
+                
+                setTimeout(() => {
+                    this.textContent = 'Don\'t click here :P';
+                    this.style.background = 'rgba(231, 76, 60, 0.8)';
+                }, 4000);
+            });
+        }
 
         // Handle scroll arrow behavior
         const scrollHint = document.querySelector('.scroll-hint');
