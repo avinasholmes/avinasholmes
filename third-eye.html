@@ -15,7 +15,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             min-height: 100vh;
         }
 
@@ -64,19 +64,74 @@
             text-align: center;
             color: white;
             padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ffffff, transparent),
+                radial-gradient(1px 1px at 200px 120px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 250px 60px, #ffffff, transparent),
+                radial-gradient(1px 1px at 300px 20px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 350px 100px, #ffffff, transparent),
+                radial-gradient(2px 2px at 400px 40px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 450px 90px, #ffffff, transparent),
+                radial-gradient(1px 1px at 500px 15px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 550px 70px, #ffffff, transparent),
+                radial-gradient(1px 1px at 600px 110px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 650px 35px, #ffffff, transparent),
+                radial-gradient(2px 2px at 700px 85px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 750px 50px, #ffffff, transparent),
+                radial-gradient(1px 1px at 800px 20px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 850px 95px, #ffffff, transparent),
+                radial-gradient(1px 1px at 900px 65px, rgba(255,255,255,0.8), transparent);
+            background-repeat: repeat;
+            background-size: 950px 150px;
+            animation: sparkle 8s linear infinite;
+            opacity: 0.6;
+            z-index: 1;
+        }
+
+        @keyframes sparkle {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-150px); }
         }
 
         .hero h1 {
             font-size: 3rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             font-weight: 300;
             letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            font-style: italic;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
         }
 
         .hero p {
             font-size: 1.2rem;
             opacity: 0.9;
             max-width: 600px;
+            position: relative;
+            z-index: 2;
         }
 
         /* Gallery Section */
@@ -150,20 +205,14 @@
         }
 
         .photo-info {
-            padding: 20px;
+            padding: 15px;
+            text-align: center;
         }
 
-        .photo-title {
-            font-size: 1.2rem;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .photo-description {
+        .click-to-view {
             color: #666;
             font-size: 0.9rem;
-            line-height: 1.5;
+            font-style: italic;
         }
 
         .view-full-gallery {
@@ -220,80 +269,172 @@
     <!-- Hero Section -->
     <section class="hero">
         <h1>Third Eye</h1>
-        <p>Macro Photography - Discovering the extraordinary in the microscopic world around us</p>
+        <div class="hero-subtitle">Photography as a way of seeing—revealing stories hidden in plain sight.</div>
     </section>
+
+    <!-- Falling Leaves Canvas -->
+    <canvas id="leaves" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;"></canvas>
 
     <!-- Gallery Section -->
     <section class="gallery-section">
         <div class="container">
-            <h2 class="section-title">Macro Photography Collection</h2>
+            <h2 class="section-title"><strong>The Art of Seeing</strong></h2>
             <p class="gallery-description">
-                Through the lens of macro photography, I explore the intricate details and hidden beauty 
-                of nature's smallest subjects. Each image reveals a world often invisible to the naked eye.
+                Photography, for me, is about noticing. Whether it's the shimmer of light on water, the lines of a city, or the fine textures of nature, I try to capture the fleeting beauty that tells a deeper story.
             </p>
             
             <div class="gallery-grid" id="gallery-grid">
-                <!-- Sample macro photos - replace with your actual images -->
-                <div class="photo-card" onclick="openPixisetGallery()">
-                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=250&fit=crop" alt="Macro Photography Sample">
+                <!-- Using your actual macro photography images -->
+                <div class="photo-card" onclick="openRandomGallery()">
+                    <img src="IMG_4853.JPG" alt="Macro Photography">
                     <div class="photo-info">
-                        <h3 class="photo-title">Nature's Geometry</h3>
-                        <p class="photo-description">Exploring the mathematical patterns found in natural structures.</p>
+                        <p class="click-to-view">click to view</p>
                     </div>
                 </div>
 
-                <div class="photo-card" onclick="openPixisetGallery()">
-                    <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&h=250&fit=crop" alt="Macro Photography Sample">
+                <div class="photo-card" onclick="openRandomGallery()">
+                    <img src="IMG_4860.JPG" alt="Macro Photography">
                     <div class="photo-info">
-                        <h3 class="photo-title">Microscopic Worlds</h3>
-                        <p class="photo-description">Revealing the hidden complexity in everyday objects.</p>
+                        <p class="click-to-view">click to view</p>
                     </div>
                 </div>
 
-                <div class="photo-card" onclick="openPixisetGallery()">
-                    <img src="https://images.unsplash.com/photo-1567427018141-95e20fae2a59?w=400&h=250&fit=crop" alt="Macro Photography Sample">
+                <div class="photo-card" onclick="openRandomGallery()">
+                    <img src="IMG_4892.JPG" alt="Macro Photography">
                     <div class="photo-info">
-                        <h3 class="photo-title">Botanical Details</h3>
-                        <p class="photo-description">Capturing the intricate structures of plant life.</p>
+                        <p class="click-to-view">click to view</p>
                     </div>
                 </div>
 
-                <div class="photo-card" onclick="openPixisetGallery()">
-                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop" alt="Macro Photography Sample">
+                <div class="photo-card" onclick="openRandomGallery()">
+                    <img src="IMG_7181.jpg" alt="Macro Photography">
                     <div class="photo-info">
-                        <h3 class="photo-title">Textural Explorations</h3>
-                        <p class="photo-description">Discovering beauty in surface textures and patterns.</p>
+                        <p class="click-to-view">click to view</p>
                     </div>
                 </div>
 
-                <div class="photo-card" onclick="openPixisetGallery()">
-                    <img src="https://images.unsplash.com/photo-1602080858428-57174f9431cf?w=400&h=250&fit=crop" alt="Macro Photography Sample">
+                <div class="photo-card" onclick="openRandomGallery()">
+                    <img src="IMG_7437.jpg" alt="Macro Photography">
                     <div class="photo-info">
-                        <h3 class="photo-title">Abstract Macro</h3>
-                        <p class="photo-description">When reality becomes abstract through magnification.</p>
+                        <p class="click-to-view">click to view</p>
                     </div>
                 </div>
 
-                <div class="photo-card" onclick="openPixisetGallery()">
-                    <img src="https://images.unsplash.com/photo-1551731409-43eb3e517a1a?w=400&h=250&fit=crop" alt="Macro Photography Sample">
+                <div class="photo-card" onclick="openRandomGallery()">
+                    <img src="IMG_7455.jpg" alt="Macro Photography">
                     <div class="photo-info">
-                        <h3 class="photo-title">Natural Symmetry</h3>
-                        <p class="photo-description">Perfect symmetry found in nature's designs.</p>
+                        <p class="click-to-view">click to view</p>
+                    </div>
+                </div>
+
+                <div class="photo-card" onclick="openRandomGallery()">
+                    <img src="IMG_4853.JPG" alt="Macro Photography">
+                    <div class="photo-info">
+                        <p class="click-to-view">click to view</p>
+                    </div>
+                </div>
+
+                <div class="photo-card" onclick="openRandomGallery()">
+                    <img src="IMG_4860.JPG" alt="Macro Photography">
+                    <div class="photo-info">
+                        <p class="click-to-view">click to view</p>
+                    </div>
+                </div>
+
+                <div class="photo-card" onclick="openRandomGallery()">
+                    <img src="IMG_4892.JPG" alt="Macro Photography">
+                    <div class="photo-info">
+                        <p class="click-to-view">click to view</p>
                     </div>
                 </div>
             </div>
 
             <div class="view-full-gallery">
-                <a href="https://holmes87.pixieset.com/macros/" target="_blank" class="cta-button">
-                    View Complete Gallery on Pixieset
+                <a href="https://holmes87.pixieset.com/" target="_blank" class="cta-button">
+                    View Complete Gallery Collection on Pixieset
                 </a>
             </div>
         </div>
     </section>
 
     <script>
-        function openPixisetGallery() {
-            window.open('https://holmes87.pixieset.com/macros/', '_blank');
+        const galleries = [
+            'https://holmes87.pixieset.com/colorofwater/',
+            'https://holmes87.pixieset.com/macros/'
+        ];
+
+        function openRandomGallery() {
+            const randomGallery = galleries[Math.floor(Math.random() * galleries.length)];
+            window.open(randomGallery, '_blank');
+        }
+
+        // Falling Leaves Animation
+        function initFallingLeaves() {
+            const canvas = document.getElementById('leaves');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const leaves = [];
+            const leafColors = ['#ff6b35', '#f7931e', '#ffd700', '#8b4513', '#d2691e'];
+            const leafShapes = ['🍁', '🍂', '🍃'];
+
+            // Create fewer leaves (8 leaves for gentler effect)
+            for(let i = 0; i < 8; i++) {
+                leaves.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * -canvas.height,
+                    vx: (Math.random() - 0.5) * 1,
+                    vy: Math.random() * 1.5 + 0.5,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: (Math.random() - 0.5) * 2,
+                    size: Math.random() * 20 + 15,
+                    shape: leafShapes[Math.floor(Math.random() * leafShapes.length)],
+                    color: leafColors[Math.floor(Math.random() * leafColors.length)],
+                    opacity: Math.random() * 0.8 + 0.2
+                });
+            }
+
+            function animateLeaves() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                leaves.forEach((leaf, index) => {
+                    // Update position
+                    leaf.x += leaf.vx + Math.sin(leaf.y * 0.01) * 0.3;
+                    leaf.y += leaf.vy;
+                    leaf.rotation += leaf.rotationSpeed;
+                    
+                    // Reset leaf when it goes off screen
+                    if (leaf.y > canvas.height + 50) {
+                        leaf.y = -50;
+                        leaf.x = Math.random() * canvas.width;
+                    }
+                    if (leaf.x > canvas.width + 50) {
+                        leaf.x = -50;
+                    } else if (leaf.x < -50) {
+                        leaf.x = canvas.width + 50;
+                    }
+                    
+                    // Draw leaf
+                    ctx.save();
+                    ctx.translate(leaf.x, leaf.y);
+                    ctx.rotate(leaf.rotation * Math.PI / 180);
+                    ctx.globalAlpha = leaf.opacity;
+                    ctx.font = leaf.size + 'px Arial';
+                    ctx.fillText(leaf.shape, -leaf.size/2, leaf.size/2);
+                    ctx.restore();
+                });
+                
+                requestAnimationFrame(animateLeaves);
+            }
+
+            // Resize canvas on window resize
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            animateLeaves();
         }
 
         // Add some interactive effects
@@ -309,6 +450,9 @@
                     this.style.transform = 'translateY(0) scale(1)';
                 });
             });
+
+            // Initialize falling leaves
+            initFallingLeaves();
         });
     </script>
 </body>
