@@ -15,7 +15,7 @@ async function loadContext(){
  const data=await response.json();if(!Array.isArray(data.news)||!data.statuses||!Number.isFinite(Date.parse(data.observed_at)))throw new Error('invalid context');context=data;
  const news=data.statuses.news,social=data.statuses.social;
  const age=Date.now()-Date.parse(data.observed_at);
- document.getElementById('context-status').textContent=`${news.status==='connected'?'GDELT connected':'News unavailable'} · ${social.status==='connected'?'Social connected':`Social unavailable${social.http_status?` (HTTP ${social.http_status})`:''}`}${age>1800000?' · Context is stale':''}`;
+ document.getElementById('context-status').textContent=`${news.status==='connected'?'GDELT connected':data.retained_after_error?'News refresh unavailable — previous observations retained':'News unavailable'} · ${social.status==='connected'?'Social connected':`Social unavailable${social.http_status?` (HTTP ${social.http_status})`:''}`}${age>1800000?' · Context is stale':''}`;
  const detail=document.getElementById('context-detail');detail.replaceChildren();const stocks=new Set(data.news.map(n=>n.ticker));detail.append(element('p',`${data.news.length} article–stock matches across ${stocks.size} securities. Observed ${format.format(new Date(data.observed_at))} ET.`));detail.append(element('p',news.scope||news.reason||'Limited source coverage.'));
  window.dispatchEvent(new Event('sharma:context'));
 }
