@@ -166,8 +166,8 @@ def parse_gkg(text,universe,store,observed_at=None):
         if not symbols:
             continue
         source_record_time=dt.datetime.strptime(fields[1],'%Y%m%d%H%M%S').replace(tzinfo=UTC).isoformat()
-        # GKG DATE is a source record/batch time, not a verified publication
-        # timestamp. Actual availability starts when we observe the document.
+        # GKG reports a publication date, shared by rows in a file. We retain
+        # that unverified source value; availability starts at our observation.
         event_at=observed_at or now()
         try:
             tone=float(fields[15].split(',')[0])
@@ -178,7 +178,7 @@ def parse_gkg(text,universe,store,observed_at=None):
             store.event('news',symbol,event_at,{'url':url,'publisher':parsed.hostname,
                         'tone':tone,'source':'GDELT GKG','match':'organization entity; unverified',
                         'source_record_time':source_record_time,
-                        'event_time_basis':'first observed; article publication time unavailable',
+                        'event_time_basis':'first observed; reported publication date unverified',
                         'used_in_score':False},url,observed_at)
             matched.add(symbol);records+=1
     return {'matched_symbols':len(matched),'matched_article_stock_pairs':records}
