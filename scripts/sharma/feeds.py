@@ -165,7 +165,10 @@ def parse_gkg(text,universe,store,observed_at=None):
         symbols=set().union(*(aliases.get(org,set()) for org in organizations)) if organizations else set()
         if not symbols:
             continue
-        event_at=dt.datetime.strptime(fields[1],'%Y%m%d%H%M%S').replace(tzinfo=UTC).isoformat()
+        source_record_time=dt.datetime.strptime(fields[1],'%Y%m%d%H%M%S').replace(tzinfo=UTC).isoformat()
+        # GKG DATE is a source record/batch time, not a verified publication
+        # timestamp. Actual availability starts when we observe the document.
+        event_at=observed_at or now()
         try:
             tone=float(fields[15].split(',')[0])
             if not math.isfinite(tone):tone=None
@@ -174,6 +177,8 @@ def parse_gkg(text,universe,store,observed_at=None):
         for symbol in symbols:
             store.event('news',symbol,event_at,{'url':url,'publisher':parsed.hostname,
                         'tone':tone,'source':'GDELT GKG','match':'organization entity; unverified',
+                        'source_record_time':source_record_time,
+                        'event_time_basis':'first observed; article publication time unavailable',
                         'used_in_score':False},url,observed_at)
             matched.add(symbol);records+=1
     return {'matched_symbols':len(matched),'matched_article_stock_pairs':records}
