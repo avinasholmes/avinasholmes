@@ -1,0 +1,264 @@
+{
+  "status": "exploratory_replay_only",
+  "model": "Sharma-PV-exploratory-v0.1",
+  "generated_at": "2026-11-14T03:13:49.726741+00:00",
+  "sessions": [
+    "2026-11-12",
+    "2026-11-13"
+  ],
+  "cutoffs_per_session": [
+    "10:30",
+    "12:30",
+    "15:00"
+  ],
+  "neutral_band_bps": 10,
+  "execution_delay_minutes": 1,
+  "warnings": [
+    "Only a few cached sessions; not unseen data or prospective evidence.",
+    "Current secondary-source membership, not historical constituent history.",
+    "Observations across stocks and horizons are correlated.",
+    "Fixed cost scenarios are assumptions; no observed spreads, fills, borrowing or impact.",
+    "No probability calibration; no statistical significance or novelty claim."
+  ],
+  "horizons": [
+    {
+      "minutes": 5,
+      "observations": 1698,
+      "outcomes": {
+        "-1": 204,
+        "0": 940,
+        "1": 554
+      },
+      "strategies": {
+        "sharma": [
+          {
+            "observations": 1698,
+            "active": 962,
+            "directional_accuracy": 0.21621621621621623,
+            "mean_net_bps_per_active_signal": -0.8840659448855828,
+            "cost_bps": 0
+          },
+          {
+            "observations": 1698,
+            "active": 962,
+            "directional_accuracy": 0.21621621621621623,
+            "mean_net_bps_per_active_signal": -10.884065944885583,
+            "cost_bps": 10
+          },
+          {
+            "observations": 1698,
+            "active": 962,
+            "directional_accuracy": 0.21621621621621623,
+            "mean_net_bps_per_active_signal": -20.88406594488558,
+            "cost_bps": 20
+          }
+        ],
+        "momentum": [
+          {
+            "observations": 1698,
+            "active": 1654,
+            "directional_accuracy": 0.2666263603385732,
+            "mean_net_bps_per_active_signal": 2.050014180264632,
+            "cost_bps": 0
+          },
+          {
+            "observations": 1698,
+            "active": 1654,
+            "directional_accuracy": 0.2666263603385732,
+            "mean_net_bps_per_active_signal": -7.949985819735368,
+            "cost_bps": 10
+          },
+          {
+            "observations": 1698,
+            "active": 1654,
+            "directional_accuracy": 0.2666263603385732,
+            "mean_net_bps_per_active_signal": -17.949985819735367,
+            "cost_bps": 20
+          }
+        ],
+        "rsi": [
+          {
+            "observations": 1698,
+            "active": 244,
+            "directional_accuracy": 0.15163934426229508,
+            "mean_net_bps_per_active_signal": -1.4685633681863113,
+            "cost_bps": 0
+          },
+          {
+            "observations": 1698,
+            "active": 244,
+            "directional_accuracy": 0.15163934426229508,
+            "mean_net_bps_per_active_signal": -11.468563368186311,
+            "cost_bps": 10
+          },
+          {
+            "observations": 1698,
+            "active": 244,
+            "directional_accuracy": 0.15163934426229508,
+            "mean_net_bps_per_active_signal": -21.46856336818631,
+            "cost_bps": 20
+          }
+        ],
+        "always_up": [
+          {
+            "observations": 1698,
+            "active": 1698,
+            "directional_accuracy": 0.32626619552414604,
+            "mean_net_bps_per_active_signal": 5.715609223493867,
+            "cost_bps": 0
+          },
+          {
+            "observations": 1698,
+            "active": 1698,
+            "directional_accuracy": 0.32626619552414604,
+            "mean_net_bps_per_active_signal": -4.284390776506133,
+            "cost_bps": 10
+          },
+          {
+            "observations": 1698,
+            "active": 1698,
+            "directional_accuracy": 0.32626619552414604,
+            "mean_net_bps_per_active_signal": -14.284390776506134,
+            "cost_bps": 20
+          }
+        ]
+      },
+      "session_results": {
+        "2026-11-12": {
+          "observations": 841,
+          "active": 463,
+          "directional_accuracy": 0.22462203023758098,
+          "mean_net_bps_per_active_signal": -8.487710336971379,
+          "cost_bps": 10
+        },
+        "2026-11-13": {
+          "observations": 857,
+          "active": 499,
+          "directional_accuracy": 0.20841683366733466,
+          "mean_net_bps_per_active_signal": -13.107538182288943,
+          "cost_bps": 10
+        }
+      }
+    },
+    {
+      "minutes": 10,
+      "observations": 1637,
+      "outcomes": {
+        "-1": 344,
+        "0": 714,
+        "1": 579
+      },
+      "strategies": {
+        "sharma": [
+          {
+            "observations": 1637,
+            "active": 872,
+            "directional_accuracy": 0.2717889908256881,
+            "mean_net_bps_per_active_signal": -2.483068735515145,
+            "cost_bps": 0
+          },
+          {
+            "observations": 1637,
+            "active": 872,
+            "directional_accuracy": 0.2717889908256881,
+            "mean_net_bps_per_active_signal": -12.483068735515145,
+            "cost_bps": 10
+          },
+          {
+            "observations": 1637,
+            "active": 872,
+            "directional_accuracy": 0.2717889908256881,
+            "mean_net_bps_per_active_signal": -22.483068735515143,
+            "cost_bps": 20
+          }
+        ],
+        "momentum": [
+          {
+            "observations": 1637,
+            "active": 1602,
+            "directional_accuracy": 0.3196004993757803,
+            "mean_net_bps_per_active_signal": -0.4321517451008336,
+            "cost_bps": 0
+          },
+          {
+            "observations": 1637,
+            "active": 1602,
+            "directional_accuracy": 0.3196004993757803,
+            "mean_net_bps_per_active_signal": -10.432151745100834,
+            "cost_bps": 10
+          },
+          {
+            "observations": 1637,
+            "active": 1602,
+            "directional_accuracy": 0.3196004993757803,
+            "mean_net_bps_per_active_signal": -20.432151745100832,
+            "cost_bps": 20
+          }
+        ],
+        "rsi": [
+          {
+            "observations": 1637,
+            "active": 238,
+            "directional_accuracy": 0.20168067226890757,
+            "mean_net_bps_per_active_signal": -1.8438517597958226,
+            "cost_bps": 0
+          },
+          {
+            "observations": 1637,
+            "active": 238,
+            "directional_accuracy": 0.20168067226890757,
+            "mean_net_bps_per_active_signal": -11.843851759795822,
+            "cost_bps": 10
+          },
+          {
+            "observations": 1637,
+            "active": 238,
+            "directional_accuracy": 0.20168067226890757,
+            "mean_net_bps_per_active_signal": -21.84385175979582,
+            "cost_bps": 20
+          }
+        ],
+        "always_up": [
+          {
+            "observations": 1637,
+            "active": 1637,
+            "directional_accuracy": 0.3536957849725107,
+            "mean_net_bps_per_active_signal": 5.840230050667899,
+            "cost_bps": 0
+          },
+          {
+            "observations": 1637,
+            "active": 1637,
+            "directional_accuracy": 0.3536957849725107,
+            "mean_net_bps_per_active_signal": -4.159769949332101,
+            "cost_bps": 10
+          },
+          {
+            "observations": 1637,
+            "active": 1637,
+            "directional_accuracy": 0.3536957849725107,
+            "mean_net_bps_per_active_signal": -14.159769949332102,
+            "cost_bps": 20
+          }
+        ]
+      },
+      "session_results": {
+        "2026-11-12": {
+          "observations": 803,
+          "active": 405,
+          "directional_accuracy": 0.2641975308641975,
+          "mean_net_bps_per_active_signal": -13.15108580148005,
+          "cost_bps": 10
+        },
+        "2026-11-13": {
+          "observations": 834,
+          "active": 467,
+          "directional_accuracy": 0.278372591006424,
+          "mean_net_bps_per_active_signal": -11.903739160106609,
+          "cost_bps": 10
+        }
+      }
+    }
+  ],
+  "excluded_records": 2701
+}
