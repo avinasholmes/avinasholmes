@@ -2,7 +2,7 @@
   "schema_version": 1,
   "observed_at": "2026-11-19T04:05:52.225211+00:00",
   "news_observed_at": "2026-11-19T04:05:52.225211+00:00",
-  "checked_at": "2026-11-19T21:23:32.164249+00:00",
+  "checked_at": "2026-11-20T02:32:20.986846+00:00",
   "retained_after_error": true,
   "used_in_score": false,
   "attribution": {
@@ -13,13 +13,13 @@
     "news": {
       "status": "unavailable",
       "http_status": 404,
-      "observed_at": "2026-11-19T21:23:32.142497+00:00",
+      "observed_at": "2026-11-20T02:32:20.850292+00:00",
       "reason": "Access refused or rate limited; no sentiment inferred"
     },
     "social": {
       "status": "unavailable",
       "http_status": 403,
-      "observed_at": "2026-11-19T21:23:32.164147+00:00",
+      "observed_at": "2026-11-20T02:32:20.986730+00:00",
       "reason": "Access refused or rate limited; no sentiment inferred"
     }
   },
