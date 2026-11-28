@@ -2,8 +2,8 @@
   "schema_version": 1,
   "observed_at": "2026-11-28T04:10:27.132519+00:00",
   "news_observed_at": "2026-11-28T04:10:27.132519+00:00",
-  "checked_at": "2026-11-28T04:10:27.132519+00:00",
-  "retained_after_error": false,
+  "checked_at": "2026-11-28T13:13:22.779966+00:00",
+  "retained_after_error": true,
   "used_in_score": false,
   "attribution": {
     "label": "The GDELT Project",
@@ -11,18 +11,15 @@
   },
   "statuses": {
     "news": {
-      "status": "connected",
-      "provider": "GDELT GKG",
-      "observed_at": "2026-11-28T04:10:27.003125+00:00",
-      "batch": "20261128041500",
-      "scope": "latest 15-minute batch; entity matching is incomplete",
-      "matched_symbols": 12,
-      "matched_article_stock_pairs": 38
+      "status": "unavailable",
+      "http_status": 404,
+      "observed_at": "2026-11-28T13:13:22.603688+00:00",
+      "reason": "Access refused or rate limited; no sentiment inferred"
     },
     "social": {
       "status": "unavailable",
       "http_status": 403,
-      "observed_at": "2026-11-28T04:10:27.132399+00:00",
+      "observed_at": "2026-11-28T13:13:22.779826+00:00",
       "reason": "Access refused or rate limited; no sentiment inferred"
     }
   },
